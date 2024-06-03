@@ -1,8 +1,12 @@
+import 'package:e_commerce_ml/bottom_nav_bar_builder.dart';
+import 'package:e_commerce_ml/screens/services/auth_service.dart';
 import 'package:e_commerce_ml/widgets/custom_text_form_field.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 enum FormStatus { signIn, register, reset }
+
+AuthService authService = AuthService();
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -23,6 +27,7 @@ class _AuthScreenState extends State<AuthScreen> {
       TextEditingController();
   TextEditingController resetEmailController = TextEditingController();
   FormStatus formStatus = FormStatus.signIn;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -37,7 +42,22 @@ class _AuthScreenState extends State<AuthScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Spacer(flex: 5),
+                    const Expanded(
+                        flex: 2,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Mapemo",
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: const Color(0xFF124076),
+                              fontFamily: 'Nunito Sans',
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        )),
+                    const Spacer(flex: 1),
                     Expanded(
                         flex: 2,
                         child: Text(
@@ -140,7 +160,26 @@ class _AuthScreenState extends State<AuthScreen> {
             Expanded(
               flex: 2,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (signInFormKey.currentState!.validate()) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => const Center(
+                                child: CircularProgressIndicator(),
+                              ));
+                      await authService
+                          .signInWithEmailAndPassword(
+                              signInEmailController.text,
+                              signInPasswordController.text,
+                              context)
+                          .then((value) {
+                        if (value != null) {
+                        } else {
+                          Navigator.pop(context);
+                        }
+                      });
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(170, 50),
                     shape: RoundedRectangleBorder(
@@ -154,18 +193,18 @@ class _AuthScreenState extends State<AuthScreen> {
             const Spacer(
               flex: 2,
             ),
-            const Expanded(
+            Expanded(
               flex: 4,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
+                  const Expanded(
                       child: Divider(
                     color: Colors.black38,
                     endIndent: 5,
                   )),
-                  GoogleSignInButton(),
-                  Expanded(
+                  googleSignIn(),
+                  const Expanded(
                       child: Divider(
                     color: Colors.black38,
                     indent: 5,
@@ -277,7 +316,26 @@ class _AuthScreenState extends State<AuthScreen> {
             Expanded(
               flex: 2,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (registerFormKey.currentState!.validate()) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => const Center(
+                                child: CircularProgressIndicator(),
+                              ));
+                      await authService
+                          .createUserWithEmailAndPassword(
+                              registerEmailController.text,
+                              registerPasswordController.text,
+                              context)
+                          .then((value) {
+                        if (value != null) {
+                        } else {
+                          Navigator.pop(context);
+                        }
+                      });
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(170, 50),
                     shape: RoundedRectangleBorder(
@@ -291,18 +349,18 @@ class _AuthScreenState extends State<AuthScreen> {
             const Spacer(
               flex: 2,
             ),
-            const Expanded(
+            Expanded(
               flex: 3,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
+                  const Expanded(
                       child: Divider(
                     color: Colors.black38,
                     endIndent: 5,
                   )),
-                  GoogleSignInButton(),
-                  Expanded(
+                  googleSignIn(),
+                  const Expanded(
                       child: Divider(
                     color: Colors.black38,
                     indent: 5,
@@ -382,17 +440,17 @@ class _AuthScreenState extends State<AuthScreen> {
             const Spacer(
               flex: 2,
             ),
-            const Expanded(
+            Expanded(
               flex: 8,
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                       child: Divider(
                     color: Colors.black38,
                     endIndent: 5,
                   )),
-                  GoogleSignInButton(),
-                  Expanded(
+                  googleSignIn(),
+                  const Expanded(
                       child: Divider(
                     color: Colors.black38,
                     indent: 5,
@@ -427,18 +485,24 @@ class _AuthScreenState extends State<AuthScreen> {
       ),
     );
   }
-}
 
-class GoogleSignInButton extends StatelessWidget {
-  const GoogleSignInButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  InkWell googleSignIn() {
     return InkWell(
       borderRadius: BorderRadius.circular(25),
-      onTap: () {},
+      onTap: () async {
+        showDialog(
+            context: context,
+            builder: (context1) => const Center(
+                  child: CircularProgressIndicator(),
+                ));
+
+        await authService.signInWithGoogle(context).then((value) {
+          if (value != null) {
+          } else {
+            Navigator.pop(context);
+          }
+        });
+      },
       child: Ink(
         padding: const EdgeInsets.all(5),
         height: 50,
