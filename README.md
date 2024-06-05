@@ -1,16 +1,42 @@
-# e_commerce_ml
+# Mapemo
 
-A new Flutter project.
+It is a flutter application and an e-commerce project that allows you to buy stuff more efficently.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Screenshots
+<table>
+  <tr>
+     <td>Register Screen</td>
+     <td>Sign In Screen</td>
+  </tr>
+  <tr>
+     <td width="33%"><img src="screenshots/kayıt.jpg" alt="Splash"></td>
+     <td width="33%"><img src="screenshots/giriş.jpg" alt="OnBoard"></td>
+  </tr>
+ </table>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<table>
+  <tr>
+     <td>Explore Screen</td>
+     <td>Detailed Advert Screen</td>
+     <td>Categories Screen</td>
+    
+  </tr>
+  <tr>
+     <td width="33%"><img src="screenshots/explore.jpg" alt="OnBoard"></td>
+     <td width="33%"><img src="screenshots/ilan detay.jpg" alt="Explore"></td>
+     <td width="33%"><img src="screenshots/kategoriler.jpg" alt="Details"></td>
+  </tr>
+ </table>
+<table>
+  <tr>
+     <td>Add Advert Screen</td>
+     <td>My Listings Screen</td>
+     <td>Chat Screen</td>
+  </tr>
+  <tr>
+     <td width="33%"><img src="screenshots/satış sayfası.jpg" alt="Splash"></td>
+     <td width="33%"><img src="screenshots/ilanlarım.jpg" alt="OnBoard"></td>
+     <td width="33%"><img src="screenshots/sohbet.jpg" alt="Create User"></td>
+  </tr>
+ </table>
